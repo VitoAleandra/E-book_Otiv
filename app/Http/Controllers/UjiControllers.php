@@ -42,6 +42,7 @@ class UjiControllers extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'name' => 'required|min:5',
             'email' => 'required|email:dns',
@@ -59,7 +60,7 @@ class UjiControllers extends Controller
             'role' => 'user',
         ]);
 
-        return redirect()->route('/store');
+        return redirect()->route('sign.login')->with('success', 'berhasil menambahkan akun ! silahkan login');
     }
 
     public function login()

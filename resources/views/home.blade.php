@@ -52,10 +52,10 @@ https://templatemo.com/tm-537-art-factory
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#welcome" class="active">Home</a></li>
                             <li class="submenu">
-                                <a href="javascript:;">Drop Down</a>
+                                <a href="javascript:;">Sign</a>
                                 <ul>
-                                    <li><a href="/login">Login</a></li>
-                                    <li><a href="/register">Register</a></li>
+                                    <li><a href="/login">Sign In</a></li>
+                                    <li><a href="/register">Sign Up</a></li>
                                 </ul>
                             </li>
                         </ul>

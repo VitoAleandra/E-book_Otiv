@@ -19,3 +19,4 @@ Route::get ('/register', [UjiControllers::class, 'index']);
 Route::post('/register/auth', [UjiControllers::class, 'store']);
 Route::get('/', [UjiControllers::class, 'landing']);
 Route::get('/login', [UjiControllers::class, 'login']);
+Route::get('/login/auth', [UjiControllers::class, 'login']);
