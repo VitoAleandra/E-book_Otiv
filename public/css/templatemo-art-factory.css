@@ -398,6 +398,7 @@ header
 .header-area .main-nav .nav li.submenu {
   position: relative;
   padding-right: 35px;
+    font-family: 'poppins';
 }
 
 .header-area .main-nav .nav li.submenu:after {
@@ -417,6 +418,7 @@ header
 .header-area .main-nav .nav li.submenu ul {
   position: absolute;
   width: 200px;
+  font-family: 'poppins';
   box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
   overflow: hidden;
   top: 40px;
@@ -431,7 +433,7 @@ header
 .header-area .main-nav .nav li.submenu ul li {
   margin-left: 0px;
   padding-left: 0px;
-  padding-right: 0px;
+  padding-right: 0px; 
 }
 
 .header-area .main-nav .nav li.submenu ul li a {
@@ -735,7 +737,6 @@ TRY IT ... with or without CENTER CENTER
   background-size: cover;
   width: 100%;
   height: 105vh;
-  margin-top: -10vh;
 }
 
 ::-webkit-scrollbar{
@@ -931,6 +932,7 @@ services
   cursor: pointer;
   display: block;
   background: #ffffff;
+  border-radius: 15px;
   box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.1);
   padding: 40px 30px;
   text-align: center;

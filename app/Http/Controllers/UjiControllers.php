@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Book;
 
 class UjiControllers extends Controller
 {
@@ -13,9 +16,27 @@ class UjiControllers extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function login()
+     {
+         return view('sign.login');
+     }
+
+     public function logout()
+     {
+        Auth::logout();
+        return redirect('/login');
+     }
+
+     public function admin()
+     {
+        return view('dash.dashboards');
+     }
+     
+
     public function landing()
     {
-        return view('home');
+        $otobook = Book::orderBy('downloaded', 'desc')->take(6)->get();
+        return view('home', compact('otobook'));
     }
     
 
@@ -31,7 +52,8 @@ class UjiControllers extends Controller
      */
     public function create()
     {
-        //
+        $regis = User::where('role', 'user')->get();
+        return view('dash.data', compact('regis')); 
     }
 
     /**
@@ -42,7 +64,6 @@ class UjiControllers extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'required|min:5',
             'email' => 'required|email:dns',
@@ -56,16 +77,37 @@ class UjiControllers extends Controller
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'askot' => $request->askot,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'role' => 'user',
         ]);
 
-        return redirect()->route('sign.login')->with('success', 'berhasil menambahkan akun ! silahkan login');
+        return redirect()->route('sign.login')->with('success', 'berhasil menambahkan akun! silahkan login');
     }
 
-    public function login()
+    public function tambah(Request $request)
+    {$keyword = $request->keyword;
+        // dd($keyword);
+        $category = book::where('title', 'LIKE', '%' . $keyword . '%')->paginate(15);
+        return view('dash.create', compact('category'));
+    }
+
+    public function auth(Request $request)
     {
-        return view('sign.login');
+        $check = $request->validate([
+            'email'=>'required|exists:users,email',
+            'password'=>'required',
+        ],
+        [
+            'email.exists' => 'email belum terdaftar',
+            'email.required' => 'email harus diisi',
+            'password.required' => 'password harus diisi',
+        ]);
+        if(Auth::attempt($check)){
+            $request->session()->regenerate();
+            return redirect()->intended('/')->with('succes', 'Berhasil Login');
+        } else {
+            return redirect()->back()->with('error', 'Silahkan Cek dan Coba Lagi');
+        }
     }
 
     /**
@@ -108,8 +150,11 @@ class UjiControllers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(user $user, $id)
     {
-        //
+        $user = User::findOrfail($id);
+        $user->delete();
+        return redirect()->route('dash.data')->with('succes', 'berhasil menghapus');
     }
 }
